@@ -34,5 +34,5 @@ jobs:
             cd /var/www/backend
             git pull origin main
             npm install --production
-            pm2 reload ecosystem.config.js
+            pm2 reload hospital-management-system
           EOF
