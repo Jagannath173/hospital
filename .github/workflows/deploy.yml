@@ -16,7 +16,7 @@ jobs:
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.EC2_HOST }}" > ~/.ssh/id_ed25519
+          echo "${{ secrets.EC2_SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -H 13.51.201.122 >> ~/.ssh/known_hosts
       - name: Frontend deploy
@@ -27,11 +27,11 @@ jobs:
       - name: Upload Frontend
         run : |
              rsync -av frontend/dist/ \
-              ubuntu@13.51.201.122:/var/www/frontend/
+              ubuntu@${{ secrets.EC2_SSH_PRIVATE_KEY }}:/var/www/frontend/
 
       - name: Backend deploy
         run: |
-          ssh ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
+          ssh ubuntu@${{ secrets.EC2_SSH_PRIVATE_KEY }} << 'EOF'
             cd /var/www/backend
             git pull origin main
             npm install --production
