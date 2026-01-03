@@ -16,8 +16,8 @@ module.exports = {
             user: "ubuntu",
             host: "13.60.63.251",
             ref: "origin/main",
-            repo: "",
-            path: "/var/www/twilio-backend",
+            repo: "git@github.com:Jagannath173/hospital.git",
+            path: "/var/www/hospital-management-system",
             "post-deploy":
                 "npm install && pm2 reload ecosystem.config.js --env production",
 
