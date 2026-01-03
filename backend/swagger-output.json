@@ -1,0 +1,2677 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Hospital Management API",
+    "description": "API documentation for Patient Management",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:4000",
+      "description": "Local server"
+    }
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/patients/regsiterPatient": {
+      "post": {
+        "tags": [
+          "Patients"
+        ],
+        "summary": "Register a new patient",
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Patient"
+              },
+              "example": {
+                "first_name": "John",
+                "last_name": "Doe",
+                "phone": "9876543210",
+                "email": "john@example.com",
+                "date_of_birth": "1990-01-01",
+                "gender": "Male",
+                "blood_group": "O+",
+                "address": "123 Main Street",
+                "medical_history": "No prior history",
+                "password": "patient123"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/patients/getPatients": {
+      "get": {
+        "tags": [
+          "Patients"
+        ],
+        "summary": "Get all patients",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Returns list of patients"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/patients/{id}": {
+      "get": {
+        "tags": [
+          "Patients"
+        ],
+        "summary": "Get Patient by id",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns total patient details"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Patients"
+        ],
+        "summary": "Update patient details",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Patient"
+              },
+              "example": {
+                "first_name": "John",
+                "last_name": "Doe",
+                "phone": "9876543210",
+                "email": "john@example.com",
+                "date_of_birth": "1990-01-01",
+                "gender": "Male",
+                "blood_group": "O+",
+                "address": "123 Main Street",
+                "medical_history": "No prior history",
+                "password": "patient123"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/employees/createEmployee": {
+      "post": {
+        "tags": [
+          "Employees"
+        ],
+        "summary": "Register a new employee",
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Employee created successfully"
+          },
+          "400": {
+            "description": "Validation error"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "first_name",
+                  "last_name",
+                  "email",
+                  "phone",
+                  "employee_type"
+                ],
+                "properties": {
+                  "first_name": {
+                    "type": "string"
+                  },
+                  "last_name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "phone": {
+                    "type": "string"
+                  },
+                  "employee_type": {
+                    "type": "array",
+                    "description": "List of role objects assigned to this employee",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "role_id": {
+                          "type": "string",
+                          "example": "R001"
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "Doctor"
+                        }
+                      },
+                      "required": [
+                        "role_id"
+                      ]
+                    }
+                  },
+                  "department": {
+                    "type": "string"
+                  },
+                  "salary": {
+                    "type": "number"
+                  },
+                  "address": {
+                    "type": "string"
+                  },
+                  "emergency_contact_name": {
+                    "type": "string"
+                  },
+                  "emergency_contact_phone": {
+                    "type": "string"
+                  },
+                  "date_of_joining": {
+                    "type": "string",
+                    "format": "date"
+                  }
+                }
+              },
+              "example": {
+                "first_name": "Jane",
+                "last_name": "Smith",
+                "email": "jane.smith@example.com",
+                "phone": "9876543210",
+                "employee_type": [
+                  {
+                    "role_id": "R001",
+                    "name": "Doctor"
+                  },
+                  {
+                    "role_id": "R002",
+                    "name": "Admin"
+                  }
+                ],
+                "department": "Cardiology",
+                "salary": 50000,
+                "address": "123 Hospital Road",
+                "emergency_contact_name": "John Smith",
+                "emergency_contact_phone": "9876501234",
+                "date_of_joining": "2023-05-12"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/employees/getEmployees": {
+      "get": {
+        "tags": [
+          "Employees"
+        ],
+        "summary": "Get all employees",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "List of employees",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Employee"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/employees/{employeeId}": {
+      "get": {
+        "tags": [
+          "Employees"
+        ],
+        "summary": "Get employee by ID",
+        "description": "",
+        "parameters": [
+          {
+            "name": "employeeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Employee ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Employee details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Employee"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Employee not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/employees/updateEmployee/{employeeId}": {
+      "put": {
+        "tags": [
+          "Employees"
+        ],
+        "summary": "UPdate employee",
+        "description": "",
+        "parameters": [
+          {
+            "name": "employeeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Employee created successfully"
+          },
+          "400": {
+            "description": "Validation error"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "first_name",
+                  "last_name",
+                  "email",
+                  "phone",
+                  "employee_type"
+                ],
+                "properties": {
+                  "first_name": {
+                    "type": "string"
+                  },
+                  "last_name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "phone": {
+                    "type": "string"
+                  },
+                  "employee_type": {
+                    "type": "array",
+                    "description": "List of role objects assigned to this employee",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "role_id": {
+                          "type": "string",
+                          "example": "R001"
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "Doctor"
+                        }
+                      },
+                      "required": [
+                        "role_id"
+                      ]
+                    }
+                  },
+                  "department": {
+                    "type": "string"
+                  },
+                  "salary": {
+                    "type": "number"
+                  },
+                  "address": {
+                    "type": "string"
+                  },
+                  "emergency_contact_name": {
+                    "type": "string"
+                  },
+                  "emergency_contact_phone": {
+                    "type": "string"
+                  },
+                  "date_of_joining": {
+                    "type": "string",
+                    "format": "date"
+                  }
+                }
+              },
+              "example": {
+                "first_name": "Jane",
+                "last_name": "Smith",
+                "email": "jane.smith@example.com",
+                "phone": "9876543210",
+                "employee_type": [
+                  {
+                    "role_id": "R001",
+                    "name": "Doctor"
+                  },
+                  {
+                    "role_id": "R002",
+                    "name": "Admin"
+                  }
+                ],
+                "department": "Cardiology",
+                "salary": 50000,
+                "address": "123 Hospital Road",
+                "emergency_contact_name": "John Smith",
+                "emergency_contact_phone": "9876501234",
+                "date_of_joining": "2023-05-12"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/appointments/createAppointment/": {
+      "post": {
+        "tags": [
+          "Appointments"
+        ],
+        "summary": "Create a new appointment",
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Appointment created successfully"
+          },
+          "400": {
+            "description": "Validation error"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Appointment"
+              },
+              "example": {
+                "patient": "64a123456789abcdef123456",
+                "doctor": "64a987654321abcdef987654",
+                "visit_date": "2023-09-15",
+                "visit_time": "10:30 AM",
+                "visit_type": "Consultation",
+                "doctor_department": "Cardiology",
+                "additional_notes": "Patient experiencing mild chest pain",
+                "status": "Scheduled"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/appointments/getAppointments/": {
+      "get": {
+        "tags": [
+          "Appointments"
+        ],
+        "summary": "Fetch all appointments",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "List of appointments",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Appointment"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/appointments/getAppointmentById/{id}": {
+      "get": {
+        "tags": [
+          "Appointments"
+        ],
+        "summary": "Get an appointment by ID",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Appointment ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Appointment details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Appointment"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Appointment not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/appointments/updateAppointment/{id}": {
+      "put": {
+        "tags": [
+          "Appointments"
+        ],
+        "summary": "Update appointment details",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Appointment ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Appointment updated successfully"
+          },
+          "404": {
+            "description": "Appointment not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Appointment"
+              },
+              "example": {
+                "status": "Completed",
+                "additional_notes": "Consultation completed successfully"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/appointments/deleteAppointment/{id}": {
+      "delete": {
+        "tags": [
+          "Appointments"
+        ],
+        "summary": "Delete appointment by ID",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Appointment ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Appointment deleted successfully"
+          },
+          "404": {
+            "description": "Appointment not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/appointments/getAppointmentsByDoctor/{doctorId}": {
+      "get": {
+        "tags": [
+          "Appointments"
+        ],
+        "summary": "Get all appointments of a specific doctor (optionally filter by visit date)",
+        "description": "",
+        "parameters": [
+          {
+            "name": "doctorId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Doctor ID"
+          },
+          {
+            "name": "visit_date",
+            "in": "query",
+            "description": "Optional visit date (YYYY-MM-DD) to filter appointments for that day",
+            "required": false,
+            "format": "date",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of appointments for the specified doctor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Appointment"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "doctorId is required"
+          },
+          "500": {
+            "description": "Error fetching doctor's appointments"
+          }
+        }
+      }
+    },
+    "/api/appointments/getAppointmentsByParams": {
+      "get": {
+        "tags": [
+          "Appointments"
+        ],
+        "summary": "Fetch appointments by optional filters (defaults to today)",
+        "description": "Query params:\r  - patientId — filter by patient ObjectId\r  - appointmentId — filter by appointment ObjectId\r  - appointmentDate — filter by date (YYYY-MM-DD). If omitted (and appointmentId omitted), defaults to today's appointments.\r  ",
+        "parameters": [
+          {
+            "name": "patientId",
+            "in": "query",
+            "description": "Filter by patient ObjectId",
+            "required": false,
+            "example": "64f1a7b2e3d1c2f001234567",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "appointmentId",
+            "in": "query",
+            "description": "Filter by appointment ObjectId",
+            "required": false,
+            "example": "64f1a7b2e3d1c2f001234890",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "appointmentDate",
+            "in": "query",
+            "description": "Filter by visit date (YYYY-MM-DD). If omitted returns today's appointments (unless appointmentId provided).",
+            "required": false,
+            "format": "date",
+            "example": "2023-09-11",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of simplified appointment objects",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AppointmentSummary"
+                  }
+                },
+                "example": [
+                  {
+                    "id": "64f1a7b2e3d1c2f001234567",
+                    "doctor_id": "64f1a7b2e3d1c2f001234890",
+                    "appointment_time": "10:30 AM",
+                    "visit_type": "Consultation",
+                    "status": "Scheduled"
+                  }
+                ]
+              }
+            }
+          },
+          "500": {
+            "description": "Server error while fetching appointments"
+          }
+        }
+      }
+    },
+    "/api/inventory/createInventory": {
+      "post": {
+        "tags": [
+          "Inventory"
+        ],
+        "summary": "Create a new inventory item",
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Inventory item created successfully"
+          },
+          "400": {
+            "description": "Validation error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Inventory"
+              },
+              "example": {
+                "brand_name": "Crocin",
+                "generic_name": "Paracetamol",
+                "drug_category": "Analgesic",
+                "form": "Tablet",
+                "strength": "500mg",
+                "drug_code": "DRG1001",
+                "unit_of_measure": "Box",
+                "pack_size": "10x10",
+                "conversion_factor": 1,
+                "batch_number": "B12345",
+                "lot_number": "L67890",
+                "manufacturing_date": "2024-06-01",
+                "expiry_date": "2026-05-31",
+                "quantity_available": 500,
+                "reorder_level": 100,
+                "max_stock_level": 2000,
+                "supplier": "MediCare Distributors",
+                "purchase_date": "2024-07-01",
+                "invoice_number": "INV-78945",
+                "purchase_price": 15,
+                "mrp": 20,
+                "selling_price": 18,
+                "tax_percent": 5,
+                "storage_conditions": "Room temperature",
+                "location_code": "RACK-01-A",
+                "cold_chain_required": false,
+                "is_controlled_substance": false,
+                "prescription_required": true,
+                "drug_license_number": "LIC123456",
+                "suppliers": [
+                  "68cd0b241433a82bd0c7ec37"
+                ],
+                "manufacturer": "GlaxoSmithKline",
+                "linked_to_billing": true,
+                "linked_to_emr": true,
+                "last_updated_by": "64c9f3d1a2b3c4d5e6f7a8b9",
+                "reason_for_adjustment": "Initial stock entry"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/inventory/getInventories": {
+      "get": {
+        "tags": [
+          "Inventory"
+        ],
+        "summary": "Fetch all inventory items",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "List of inventory items",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Inventory"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/inventory/getInventoryById/{id}": {
+      "get": {
+        "tags": [
+          "Inventory"
+        ],
+        "summary": "Get inventory item by ID",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Inventory ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Inventory details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Inventory"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Inventory not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/inventory/updateInventory/{id}": {
+      "put": {
+        "tags": [
+          "Inventory"
+        ],
+        "summary": "Update an inventory item",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Inventory ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Inventory item updated successfully"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Inventory not found"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Inventory"
+              },
+              "example": {
+                "brand_name": "Crocin",
+                "generic_name": "Paracetamol",
+                "drug_category": "Analgesic",
+                "form": "Tablet",
+                "strength": "500mg",
+                "drug_code": "DRG1001",
+                "unit_of_measure": "Box",
+                "pack_size": "10x10",
+                "conversion_factor": 1,
+                "batch_number": "B12345",
+                "lot_number": "L67890",
+                "manufacturing_date": "2024-06-01",
+                "expiry_date": "2026-05-31",
+                "quantity_available": 500,
+                "reorder_level": 100,
+                "max_stock_level": 2000,
+                "supplier": "MediCare Distributors",
+                "purchase_date": "2024-07-01",
+                "invoice_number": "INV-78945",
+                "purchase_price": 15,
+                "mrp": 20,
+                "selling_price": 18,
+                "tax_percent": 5,
+                "storage_conditions": "Room temperature",
+                "location_code": "RACK-01-A",
+                "cold_chain_required": false,
+                "is_controlled_substance": false,
+                "prescription_required": true,
+                "drug_license_number": "LIC123456",
+                "suppliers": [
+                  "68cd0b241433a82bd0c7ec37"
+                ],
+                "manufacturer": "GlaxoSmithKline",
+                "linked_to_billing": true,
+                "linked_to_emr": true,
+                "last_updated_by": "64c9f3d1a2b3c4d5e6f7a8b9",
+                "reason_for_adjustment": "Initial stock entry"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/inventory/deleteInventory/{id}": {
+      "delete": {
+        "tags": [
+          "Inventory"
+        ],
+        "summary": "Delete an inventory item",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Inventory ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Inventory item deleted successfully"
+          },
+          "404": {
+            "description": "Inventory not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/prescriptions/createPrescription": {
+      "post": {
+        "tags": [
+          "Prescriptions"
+        ],
+        "summary": "Create a new prescription",
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Prescription created successfully"
+          },
+          "400": {
+            "description": "Validation error"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Prescription"
+              },
+              "example": {
+                "appointment_id": "64a123456789abcdef123456",
+                "patient_id": "64a654321987abcdef123123",
+                "doctor_id": "64a789456321abcdef654321",
+                "visit_date": "2023-09-15",
+                "blood_pressure": "120/80",
+                "pulse": "72",
+                "height": "175 cm",
+                "weight": "70 kg",
+                "bmi": "22.8",
+                "spo2": "98%",
+                "complaints": "Headache and fatigue",
+                "medicines": [
+                  {
+                    "name": "Paracetamol",
+                    "dosage": "500mg",
+                    "duration": "5 days"
+                  }
+                ],
+                "advice": "Drink plenty of water",
+                "tests_prescribed": "Blood Test",
+                "next_visit": "2023-09-22",
+                "doctor_notes": "Patient advised to rest",
+                "status": "Draft"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/prescriptions/getPrescriptions": {
+      "get": {
+        "tags": [
+          "Prescriptions"
+        ],
+        "summary": "Fetch all prescriptions",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "List of prescriptions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Prescription"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/prescriptions/getPrescriptionById/{id}": {
+      "get": {
+        "tags": [
+          "Prescriptions"
+        ],
+        "summary": "Get prescription by ID",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Prescription ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Prescription details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Prescription"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Prescription not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/prescriptions/updatePrescription/{id}": {
+      "put": {
+        "tags": [
+          "Prescriptions"
+        ],
+        "summary": "Update a prescription",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Prescription ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Prescription updated successfully"
+          },
+          "404": {
+            "description": "Prescription not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Prescription"
+              },
+              "example": {
+                "status": "Completed",
+                "doctor_notes": "Patient recovered"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/prescriptions/deletePrescription/{id}": {
+      "delete": {
+        "tags": [
+          "Prescriptions"
+        ],
+        "summary": "Delete prescription",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Prescription ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Prescription deleted successfully"
+          },
+          "404": {
+            "description": "Prescription not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/prescriptions/getPrescriptionsByPatientId/{id}": {
+      "get": {
+        "tags": [
+          "Prescriptions"
+        ],
+        "summary": "Get prescription by ID",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Prescription ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Prescription details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Prescription"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Prescription not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/prescriptions/getPrescriptionsByPatient": {
+      "get": {
+        "tags": [
+          "Prescriptions"
+        ],
+        "summary": "Get prescriptions by patient ID (optional appointment filter)",
+        "description": "",
+        "parameters": [
+          {
+            "name": "patientId",
+            "in": "query",
+            "description": "ID of the patient",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "appointmentId",
+            "in": "query",
+            "description": "Optional appointment ID to filter prescriptions",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of prescriptions for the patient",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Prescription"
+                  }
+                },
+                "example": [
+                  {
+                    "_id": "68d93a037789f2d6170c3fbc",
+                    "appointment_id": "68d92f06a1a56a1a3f706798",
+                    "patient_id": {
+                      "_id": "68c9240bd092bc65a28ec1ef",
+                      "first_name": "John",
+                      "last_name": "Doe",
+                      "phone": "9876543210"
+                    },
+                    "doctor_id": {
+                      "employee_type": {
+                        "primary_role_type": {
+                          "role": "68c6fc96408320281fa3fdcd",
+                          "role_name": "Doctor"
+                        },
+                        "secondary_role_type": []
+                      },
+                      "_id": "68d0d29d2cd8e6adc84809b6",
+                      "first_name": "Neha",
+                      "last_name": "Reddy",
+                      "department": "General Surgery"
+                    },
+                    "visit_date": "2025-09-28T00:00:00.000Z",
+                    "blood_pressure": "120/80",
+                    "pulse": "72",
+                    "height": "190",
+                    "weight": "95",
+                    "bmi": "26.3",
+                    "spo2": "100",
+                    "complaints": [
+                      "fever",
+                      "vomiting"
+                    ],
+                    "medicines": [
+                      {
+                        "name": "Paracetamol",
+                        "dosage": "500mg",
+                        "_id": "68d93a037789f2d6170c3fbd"
+                      }
+                    ],
+                    "advice": "Sleep properly",
+                    "tests_prescribed": "Full Body checkup",
+                    "next_visit": "2 days",
+                    "status": "Draft",
+                    "createdAt": "2025-09-28T13:37:07.653Z",
+                    "updatedAt": "2025-09-28T13:37:07.653Z",
+                    "__v": 0
+                  }
+                ]
+              }
+            }
+          },
+          "500": {
+            "description": "Error fetching prescriptions"
+          }
+        }
+      }
+    },
+    "/api/prescriptions/upsertPrescription": {
+      "post": {
+        "tags": [
+          "Prescriptions"
+        ],
+        "summary": "Create or update a prescription (upsert)",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Prescription created or updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Prescription"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request payload"
+          },
+          "500": {
+            "description": "Server error while upserting prescription"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Prescription"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/prescriptions/suggestions": {
+      "get": {
+        "tags": [
+          "Prescriptions"
+        ],
+        "summary": "Get top medicine suggestions for a doctor based on complaints",
+        "description": "",
+        "parameters": [
+          {
+            "name": "doctorId",
+            "in": "query",
+            "description": "ID of the doctor",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "complaints",
+            "in": "query",
+            "description": "Array of complaints to match",
+            "required": true,
+            "items": {
+              "type": "string"
+            },
+            "schema": {
+              "type": "array"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of top medicine suggestions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MedicineSuggestion"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing doctorId or complaints"
+          },
+          "500": {
+            "description": "Server error while fetching suggestions"
+          }
+        }
+      }
+    },
+    "/api/prescriptions/getPrescriptionsByDoctor": {
+      "get": {
+        "tags": [
+          "Prescriptions"
+        ],
+        "summary": "Get prescriptions for a doctor within a date range",
+        "description": "",
+        "parameters": [
+          {
+            "name": "doctorId",
+            "in": "query",
+            "description": "ID of the doctor",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "since",
+            "in": "query",
+            "description": "ISO date string (YYYY-MM-DD). Defaults to last 30 days if not provided.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of prescriptions for the doctor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "medicines": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "name": {
+                              "type": "string"
+                            },
+                            "dosage": {
+                              "type": "string"
+                            },
+                            "duration": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      "complaints": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "visit_date": {
+                        "type": "string",
+                        "format": "date-time"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing doctorId"
+          },
+          "500": {
+            "description": "Server error while fetching prescriptions"
+          }
+        }
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "identifier": {
+                    "example": "any"
+                  },
+                  "password": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/refresh": {
+      "post": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/logout": {
+      "post": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/screen/createScreen": {
+      "post": {
+        "tags": [
+          "Screens"
+        ],
+        "summary": "Create a new screen",
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Screen created successfully"
+          },
+          "400": {
+            "description": "Validation error"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Screen"
+              },
+              "example": {
+                "code": "SCR01",
+                "name": "Dashboard",
+                "url": "/dashboard",
+                "icon": "dashboard-icon"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/screen/getAllScreens": {
+      "get": {
+        "tags": [
+          "Screens"
+        ],
+        "summary": "Fetch all screens",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "List of screens",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Screen"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/screen/getScreenById/{id}": {
+      "get": {
+        "tags": [
+          "Screens"
+        ],
+        "summary": "Get screen by ID",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Screen ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Screen details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Screen"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Screen not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/screen/updateScreen/{id}": {
+      "put": {
+        "tags": [
+          "Screens"
+        ],
+        "summary": "Update a screen",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Screen ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Screen updated successfully"
+          },
+          "404": {
+            "description": "Screen not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Screen"
+              },
+              "example": {
+                "name": "Reports",
+                "url": "/reports",
+                "icon": "report-icon"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/screen/deleteScreen/{id}": {
+      "delete": {
+        "tags": [
+          "Screens"
+        ],
+        "summary": "Delete a screen",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Screen ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Screen deleted successfully"
+          },
+          "404": {
+            "description": "Screen not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/roles/createRole": {
+      "post": {
+        "tags": [
+          "Roles"
+        ],
+        "summary": "Create a new role",
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Role created successfully"
+          },
+          "400": {
+            "description": "Validation error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Role"
+              },
+              "example": {
+                "role_id": "R001",
+                "name": "Doctor",
+                "description": "Responsible for patient treatment",
+                "permissions": [
+                  "create_appointment",
+                  "update_prescription",
+                  "view_patients"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/roles/getRoles": {
+      "get": {
+        "tags": [
+          "Roles"
+        ],
+        "summary": "Fetch all roles",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "List of roles",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Role"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/roles/getRoleById/{id}": {
+      "get": {
+        "tags": [
+          "Roles"
+        ],
+        "summary": "Get role by ID",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Role ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Role details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Role"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Role not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/roles/updateRole/{id}": {
+      "put": {
+        "tags": [
+          "Roles"
+        ],
+        "summary": "Update a role",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Role ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Role updated successfully"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Role not found"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Role"
+              },
+              "example": {
+                "description": "Updated description",
+                "permissions": [
+                  "view_patients",
+                  "manage_inventory"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/roles/deleteRole/{id}": {
+      "delete": {
+        "tags": [
+          "Roles"
+        ],
+        "summary": "Delete a role",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Role ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Role deleted successfully"
+          },
+          "404": {
+            "description": "Role not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/email/createTemplate": {
+      "post": {
+        "tags": [
+          "EmailTemplates"
+        ],
+        "summary": "Create a new email template",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Email template created successfully"
+          },
+          "400": {
+            "description": "Validation error"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmailTemplate"
+              },
+              "example": {
+                "from": "noreply@hospital.com",
+                "to": "{{email}}",
+                "subject": "Welcome Email",
+                "body": "Hello {{name}}, welcome to the Hospital Management System!"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/email/getAllTemplates": {
+      "get": {
+        "tags": [
+          "EmailTemplates"
+        ],
+        "summary": "Get all email templates",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Returns list of email templates",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EmailTemplate"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/email/getTemplateById/{id}": {
+      "get": {
+        "tags": [
+          "EmailTemplates"
+        ],
+        "summary": "Get an email template by ID",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Template ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Template details"
+          },
+          "404": {
+            "description": "Template not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/email/updateTemplate/{id}": {
+      "put": {
+        "tags": [
+          "EmailTemplates"
+        ],
+        "summary": "Update an email template",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Template ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Template updated successfully"
+          },
+          "404": {
+            "description": "Template not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmailTemplate"
+              },
+              "example": {
+                "subject": "Updated Subject",
+                "body": "Hello {{name}}, this is the updated email body."
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/email/deleteTemplate/{id}": {
+      "delete": {
+        "tags": [
+          "EmailTemplates"
+        ],
+        "summary": "Delete an email template",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Template ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Template deleted successfully"
+          },
+          "404": {
+            "description": "Template not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/email/send": {
+      "post": {
+        "tags": [
+          "EmailTemplates"
+        ],
+        "summary": "Send an email using a template",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Email sent successfully"
+          },
+          "400": {
+            "description": "Validation error"
+          },
+          "500": {
+            "description": "Email sending failed"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "templateId": {
+                    "type": "string",
+                    "example": "64df8a7d1f2b2c0012a34567"
+                  },
+                  "to": {
+                    "type": "string",
+                    "example": "patient@example.com"
+                  },
+                  "variables": {
+                    "type": "object",
+                    "example": {
+                      "name": "John Doe",
+                      "appointment_date": "2023-10-15"
+                    }
+                  }
+                },
+                "required": [
+                  "templateId",
+                  "to"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/supplier/createSupplier": {
+      "post": {
+        "tags": [
+          "Suppliers"
+        ],
+        "summary": "Create a new supplier",
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Supplier created successfully"
+          },
+          "400": {
+            "description": "Validation error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Supplier"
+              },
+              "example": {
+                "supplier_name": "MediCare Distributors",
+                "contact_person": "John Doe",
+                "phone": "9876543210",
+                "email": "contact@medicare.com",
+                "license_number": "LIC123456",
+                "address": "123 Pharma Street, City",
+                "gst_number": "29ABCDE1234F1Z5",
+                "is_active": true
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/supplier/getSuppliers": {
+      "get": {
+        "tags": [
+          "Suppliers"
+        ],
+        "summary": "Get all suppliers",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Returns a list of suppliers",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Supplier"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/supplier/getSupplierById/{id}": {
+      "get": {
+        "tags": [
+          "Suppliers"
+        ],
+        "summary": "Get a supplier by ID",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Supplier ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Supplier details returned"
+          },
+          "404": {
+            "description": "Supplier not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/supplier/updateSupplier/{id}": {
+      "put": {
+        "tags": [
+          "Suppliers"
+        ],
+        "summary": "Update a supplier",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Supplier ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Supplier updated successfully"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Supplier not found"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Supplier"
+              },
+              "example": {
+                "phone": "9123456789",
+                "address": "New Pharma Market, Block 5"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/supplier/deleteSupplier/{id}": {
+      "delete": {
+        "tags": [
+          "Suppliers"
+        ],
+        "summary": "Delete a supplier",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Supplier ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Supplier deleted successfully"
+          },
+          "404": {
+            "description": "Supplier not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Patient": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "example": "object"
+          },
+          "properties": {
+            "type": "object",
+            "properties": {
+              "first_name": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  }
+                }
+              },
+              "last_name": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  }
+                }
+              },
+              "phone": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  }
+                }
+              },
+              "email": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  }
+                }
+              },
+              "date_of_birth": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "format": {
+                    "type": "string",
+                    "example": "date"
+                  }
+                }
+              },
+              "gender": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "enum": {
+                    "type": "array",
+                    "example": [
+                      "Male",
+                      "Female",
+                      "Other"
+                    ],
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "blood_group": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  }
+                }
+              },
+              "address": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  }
+                }
+              },
+              "medical_history": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  }
+                }
+              },
+              "createdAt": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "format": {
+                    "type": "string",
+                    "example": "date-time"
+                  }
+                }
+              },
+              "updatedAt": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "format": {
+                    "type": "string",
+                    "example": "date-time"
+                  }
+                }
+              }
+            }
+          },
+          "required": {
+            "type": "array",
+            "example": [
+              "first_name",
+              "last_name"
+            ],
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "Employee": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "example": "object"
+          },
+          "properties": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  }
+                }
+              },
+              "first_name": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  }
+                }
+              },
+              "last_name": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  }
+                }
+              },
+              "email": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  }
+                }
+              },
+              "phone": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  }
+                }
+              },
+              "employee_type": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  }
+                }
+              },
+              "department": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  }
+                }
+              },
+              "salary": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "number"
+                  }
+                }
+              },
+              "address": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  }
+                }
+              },
+              "emergency_contact_name": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  }
+                }
+              },
+              "emergency_contact_phone": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  }
+                }
+              },
+              "date_of_joining": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "format": {
+                    "type": "string",
+                    "example": "date"
+                  }
+                }
+              },
+              "createdAt": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "format": {
+                    "type": "string",
+                    "example": "date-time"
+                  }
+                }
+              },
+              "updatedAt": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "format": {
+                    "type": "string",
+                    "example": "date-time"
+                  }
+                }
+              }
+            }
+          },
+          "required": {
+            "type": "array",
+            "example": [
+              "first_name",
+              "last_name",
+              "email",
+              "phone",
+              "employee_type"
+            ],
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}
