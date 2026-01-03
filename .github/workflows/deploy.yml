@@ -21,7 +21,7 @@ jobs:
           ssh-keyscan _H ${{ secrets.EC2_HOST}} >> ~/.ssh/known_hosts
       - name: Frontend deploy
         run : |
-            cd Frontend
+            cd frontend
             npm install
             npm run build
       - name: Upload Frontend
