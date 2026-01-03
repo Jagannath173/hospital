@@ -1,4 +1,4 @@
-name : Auto Deploy Hospital Management System
+name: Auto Deploy Hospital Management System
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    runs-on : ubuntu-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repo
@@ -18,22 +18,24 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.EC2_SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan -H 13.51.201.122 >> ~/.ssh/known_hosts
-      - name: Frontend deploy
-        run : |
-            cd frontend
-            npm install
-            npm run build
-      - name: Upload Frontend
-        run : |
-             rsync -av frontend/dist/ \
-              ubuntu@${{ secrets.EC2_SSH_PRIVATE_KEY }}:/var/www/frontend/
+          ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Backend deploy
+      - name: Build Frontend
         run: |
-          ssh ubuntu@${{ secrets.EC2_SSH_PRIVATE_KEY }} << 'EOF'
+          cd frontend
+          npm install
+          npm run build
+
+      - name: Upload Frontend
+        run: |
+          rsync -av --delete frontend/dist/ \
+          ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/var/www/frontend/
+
+      - name: Deploy Backend
+        run: |
+          ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
             cd /var/www/backend
             git pull origin main
             npm install --production
-            pm2 reload hospital-management-system
+            pm2 reload hospital-management-system || pm2 start ecosystem.config.js
           EOF
