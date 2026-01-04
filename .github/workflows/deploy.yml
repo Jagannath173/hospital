@@ -24,6 +24,7 @@ jobs:
         run: |
           cd frontend
           npm install
+          echo "VITE_API_BASE_URL=/api" > .env.production
           npm run build
 
       - name: Upload Frontend
